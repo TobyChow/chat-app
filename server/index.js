@@ -13,7 +13,7 @@ const bodyParser = require( 'body-parser');
 // const Room = require( '../schemas/RoomSchema.js');
 mongoose.Promise = global.Promise;
 
-const port = 5000;
+const PORT = process.env.PORT || 5000; // req process.env.port for heroku, 5000 on local
 const app = express();
 const server = Server(app)
 // const compiler = webpack(config);
@@ -174,7 +174,7 @@ db.once('open', () => {
     users:[{user:'test user', _id:'109301'}],
     _id:'2'
   }).save()
-  server.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+  server.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
   });
 });
