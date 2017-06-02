@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/actionCreators';
 //css
-import { text, textHover, activeRoom } from '../css/roomContainer.js'
-import io from 'socket.io-client';
-
-const socket = io();
+import { text, activeRoom } from '../css/roomContainer.js'
 
 class Room extends Component {
   constructor(props) {
@@ -15,6 +12,7 @@ class Room extends Component {
   }
 
   handleRoomChange(e) {
+    let { socket } = this.props;
     // only applies if clicking on a new room (not clicking the same room)
     if (this.props.roomName !== this.props.currRoom) {
       console.log(`switching to room ${this.props.roomName}`);

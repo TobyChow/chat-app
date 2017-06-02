@@ -5,17 +5,14 @@ import * as actionCreators from '../../actions/actionCreators';
 //components
 import Messages from '../Messages';
 import RoomContainer from './RoomContainer';
-import Inputs from '../Inputs';
 import Users from '../Users';
-import test from '../test';
 
 const mainContainer = {
   display:'flex',
   width:'100vw',
   height:'100vh',
 }
-import io from 'socket.io-client';
-var socket = io();
+
 
 class MainContainer extends Component {
   constructor(props) {
@@ -24,6 +21,7 @@ class MainContainer extends Component {
     this.handleRoomSubscribe = this.handleRoomSubscribe.bind(this);
     this.handleRoomUnsubscribe = this.handleRoomUnsubscribe.bind(this);
     this.handleUserDisconnect = this.handleUserDisconnect.bind(this);
+    this.socket = this.props.socket;
   }
 
   componentDidMount() {
@@ -35,26 +33,25 @@ class MainContainer extends Component {
   }
 
   handleIncomingMessage() {
-    socket.on('client msg', (msg) => {
+    this.socket.on('client msg', (msg) => {
       const { room, user, message } = msg;
-      console.log('firing postmessage');
       this.props.postMessage(room, user, message); // ONLY update state when receiving message
     })
   }
 
   handleRoomSubscribe(){
-    socket.on('subscribe', (data) => {
+    this.socket.on('subscribe', (data) => {
       console.log(`adding user ${data.user} to ${data.room}`);
       this.props.addUser(data.room, data.user, data._id)
     })
     // add user to local state room's users array
-    socket.emit('subscribe', {room:'general', user:this.props.user.user, _id:this.props.user._id})
+    this.socket.emit('subscribe', {room:'General', user:this.props.user.user, _id:this.props.user._id})
   }
 
   handleUserDisconnect(){
-    socket.on('user disconnect', (_id) => {
+    this.socket.on('user disconnect', (_id) => {
       console.log(`${_id} has disconnected`);
-      /* messy hack to find room disconnected user was in to update state and db, 
+      /* messy hack to find room the disconnected user was in to update state and db, 
       since we can't pass data on disconnect socket evt */
       let matchedRoom = this.props.rooms.filter((room) => {
         return room.users.some((user) => {
@@ -63,12 +60,12 @@ class MainContainer extends Component {
       })
       console.log(`disconnected user was in room ${matchedRoom[0].room}`);
       this.props.removeUser(matchedRoom[0].room , _id) // updates local state
-      socket.emit('unsubscribe', { room:matchedRoom[0].room, _id }) //updates db
+      this.socket.emit('unsubscribe', { room:matchedRoom[0].room, _id }) //updates db
     })
   }
 
   handleRoomUnsubscribe(){
-    socket.on('unsubscribe', (data) => {
+    this.socket.on('unsubscribe', (data) => {
       console.log(`removing user ${data._id} from ${data.room}`);
       this.props.removeUser(data.room, data._id)
     })
@@ -85,9 +82,9 @@ class MainContainer extends Component {
     }
     return (
       <div style={mainContainer}>
-        <RoomContainer socket={socket}/>
-        <Messages socket={socket} room={this.props.currRoom} messages={matchedRoom.messages}/>
-        <Users users={matchedRoom.users}/>
+        <RoomContainer socket={this.socket}/>
+        <Messages socket={this.socket} room={this.props.currRoom} messages={matchedRoom.messages}/>
+        <Users socket={this.socket} users={matchedRoom.users}/>
       </div>
     );
   }

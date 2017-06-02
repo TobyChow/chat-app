@@ -7,9 +7,6 @@ import {mainContainer, messageContainer, chatTitle, messages } from '../css/mess
 
 // working with room data that matches the room name
 export default class Messages extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     let { socket } = this.props;

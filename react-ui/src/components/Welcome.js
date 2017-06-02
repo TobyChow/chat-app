@@ -5,9 +5,6 @@ import * as actionCreators from '../actions/actionCreators';
 //css
 import { welcomeContainer, logoContainer, logo, input, caption } from '../css/welcome.js';
 //comp
-import io from 'socket.io-client';
-
-const socket = io();
 
 class Welcome extends Component {
   constructor(props) {
@@ -35,6 +32,7 @@ class Welcome extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    let { socket } = this.props;
     this.props.newUser({ user: this.state.name, _id: socket.id });
   }
 

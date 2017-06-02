@@ -7,9 +7,6 @@ import { roomContainer, title, input } from '../../css/roomContainer';
 //component
 import Room from '../Room';
 
-// import io from 'socket.io-client';
-// const socket = io();
-
 class RoomContainer extends Component {
   constructor(props) {
     super(props);
@@ -60,11 +57,12 @@ class RoomContainer extends Component {
   }
 
   render() {
+    let { socket } = this.props;
     return (
       <div style={roomContainer}>
         <h2 style={title}>Rooms</h2>
         {this.props.rooms.map((rooms) => {
-         return <Room roomName={rooms.room} key={rooms._id}/>
+         return <Room socket={socket} roomName={rooms.room} key={rooms._id}/>
         })}
         <form onSubmit={this.handleSubmit}>
           <input style={input} required type="text" name="newRoomName" value={this.state.newRoomName} onChange={this.handleChange} placeholder="Add Room" />

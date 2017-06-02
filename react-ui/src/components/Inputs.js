@@ -8,9 +8,6 @@ import ContentEditable from 'react-contenteditable'
 import EmojiButton from './EmojiButton';
 //css
 import { inputContainer, form, input, btnContainer } from '../css/inputs';
-// import io from 'socket.io-client';
-
-// const socket = io();
 
 class Inputs extends Component {
   constructor(props) {
@@ -40,7 +37,6 @@ class Inputs extends Component {
     const message = this.state.message;
     const room = this.props.currRoom;
     socket.emit('client msg', { room, user, message })
-    console.log('firing postmessage');
     this.props.postMessage(room, user, message) // ONLY updates state of client that sent message
       // clear and return focus to input field
     this.setState({ message: '' });
@@ -50,14 +46,14 @@ class Inputs extends Component {
   handleCaret() {
     var el = document.getElementById('m');
     el.focus();
-    if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
+    if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
       var range = document.createRange();
       range.selectNodeContents(el);
       range.collapse(false);
       var sel = window.getSelection();
       sel.removeAllRanges();
       sel.addRange(range);
-    } else if (typeof document.body.createTextRange != "undefined") {
+    } else if (typeof document.body.createTextRange !== "undefined") {
       var textRange = document.body.createTextRange();
       textRange.moveToElementText(el);
       textRange.collapse(false);

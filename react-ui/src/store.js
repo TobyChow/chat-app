@@ -1,25 +1,15 @@
-import { createStore, compose, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { syncHistoryWithStore} from 'react-router-redux';
-import { browserHistory } from 'react-router';
 import { createBrowserHistory } from 'history';
-import axios from 'axios';
 import thunk from 'redux-thunk'
 // import the root reducer
 import rootReducer from './reducers/index';
 
-// import test data
-import rooms from './data/rooms.js'
-
-// create an object for the default data
-const defaultState = {
-	rooms
-};
-
 // for redux dev tools
-const enhancers = compose(
-	window.devToolsExtension? window.devToolsExtension(): f=>f,
-	applyMiddleware(thunk)
-	);
+// const enhancers = compose(
+// 	window.devToolsExtension? window.devToolsExtension(): f=>f,
+// 	applyMiddleware(thunk)
+// );
 
 // create store
 const store = createStore(rootReducer, applyMiddleware(thunk));

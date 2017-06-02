@@ -9,18 +9,17 @@ const serveStatic = require( 'serve-static');
 const mongoose = require( 'mongoose');
 const bodyParser = require( 'body-parser');
 
-// model
-// const Room = require( '../schemas/RoomSchema.js');
 mongoose.Promise = global.Promise;
 
+// Server setup
 const PORT = process.env.PORT || 5000; // req process.env.port for heroku, 5000 on local
 const app = express();
 const server = Server(app)
 // const compiler = webpack(config);
 const io = socket(server)
 const router = express.Router();
-// const staticPath = path.join(__dirname, '..', '/public')
 
+//************************************** Schemas
 const Schema = mongoose.Schema;
 
 const MessageSchema = new mongoose.Schema({
@@ -40,32 +39,12 @@ const RoomSchema = new mongoose.Schema({
   _id:String
 })
 const Room = mongoose.model('Room', RoomSchema)
+//************************************** 
+
+// Serve static files
 app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
-// body parser for POST req data
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(serveStatic(staticPath))
-// For allowing AJAX requests
-// app.use(function(req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-//   //and remove cacheing so we get the most recent comments
-//   res.setHeader('Cache-Control', 'no-cache');
-//   next();
-// });
-
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join(__dirname, '../src/index.html'));
-// });
-
-//routing
-// app.get('/api',(req,res) => {
-//   res.set('Content-Type', 'application/json');
-//   res.send({'message':'aaa'})
-// })
+//************************************** API
 app.use('/', router);
 // get all collections
 router.route('/api').get((req,res) => {
@@ -83,8 +62,10 @@ router.route('/api/:room')
       res.json(data);
     })
   })
+//************************************** 
 
-// socket stuff
+//************************************** Socket Events
+
 io.on('connection', function(socket) {
   console.log('opening socket');
   // add users to room

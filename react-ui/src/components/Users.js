@@ -4,9 +4,6 @@ import React, { Component } from 'react';
 // import * as actionCreators from '../../actions/actionCreators';
 //css
 import {userContainer, title, users, text} from '../css/users';
-import io from 'socket.io-client';
-
-const socket = io();
 
 var li = {
 	'list-style-type':'none',
@@ -17,6 +14,8 @@ var li = {
 
 export default class Users extends Component {
 	render() {
+		let { socket } = this.props;
+		console.log(socket.id);
 		return (
 			<div class="users-container" style={userContainer}>
 		        <h3 class="user-title" style={title}>Users</h3>

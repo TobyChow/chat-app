@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 //components
 import App from './components/App';
 // import react router deps
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
 import store, { history } from './store';
 

@@ -5,29 +5,16 @@ import React, { Component } from 'react';
 //components
 import Welcome from './Welcome';
 import MainContainer from './containers/MainContainer';
+// soc
+import io from 'socket.io-client';
+var socket = io();
 
 export class App extends Component {
-	constructor(props){
-		super(props);
-	}
-  componentDidMount() {
-    fetch('/api')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`status ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(json => {
-        console.log(json);
-      }).catch(e => {
-        console.log(e);
-      })
-  }
+
 	render() {
 		return (
 			<div>
-				{this.props.user.user ? <MainContainer/> : <Welcome/> }
+				{this.props.user.user ? <MainContainer socket={socket}/> : <Welcome socket={socket}/> }
 			</div>
 		)
 	}

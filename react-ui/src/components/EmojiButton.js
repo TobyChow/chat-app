@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 var EmojiPicker = require('react-emoji-picker');
-var emojiMap = require('react-emoji-picker/lib/emojiMap');
 
 // styles for the emoji picker wrapper
 var emojiPickerStyles = {

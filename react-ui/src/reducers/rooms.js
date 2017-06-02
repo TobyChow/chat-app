@@ -1,10 +1,8 @@
-import axios from 'axios'
 
 function rooms(state = [], action) {
   switch (action.type) {
 
     case 'POST_MESSAGE':
-      console.log('updating own state');
       let msg = {room:action.room, user:action.user, message:action.message};
       // add new message to state
       let newState = state.map((data) => {
