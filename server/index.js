@@ -150,7 +150,7 @@ db.once('open', () => {
   Room({
     room: 'Test Room',
     messages: [
-      { user: 'test user', message: 'Welcome to test room' }
+      { user: 'Test User', message: 'Welcome to test room' }
     ],
     users:[{user:'test user', _id:'109301'}],
     _id:'2'
