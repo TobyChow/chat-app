@@ -124,6 +124,8 @@ io.on('connection', function(socket) {
 
   socket.on('disconnect',() => {
     console.log(`user ${socket.id} has disconnected`);
+    // remove user on page refresh
+    mongoose.connection.collections.rooms.update({room:"General"}, {$pull:{"users":{"_id": socket.id}}});
     socket.broadcast.emit('user disconnect', socket.id);
   })
 
