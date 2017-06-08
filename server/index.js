@@ -7,7 +7,6 @@ const socket = require( 'socket.io');
 const { Server } = require( 'http');
 const serveStatic = require( 'serve-static');
 const mongoose = require( 'mongoose');
-const bodyParser = require( 'body-parser');
 
 mongoose.Promise = global.Promise;
 
@@ -125,7 +124,7 @@ io.on('connection', function(socket) {
   socket.on('disconnect',() => {
     console.log(`user ${socket.id} has disconnected`);
     // remove user on page refresh
-    mongoose.connection.collections.rooms.update({room:"General"}, {$pull:{"users":{"_id": socket.id}}});
+    mongoose.connection.collections.rooms.update({}, {$pull:{"users":{"_id": socket.id}}},{multi:true});
     socket.broadcast.emit('user disconnect', socket.id);
   })
 
