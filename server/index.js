@@ -137,25 +137,25 @@ app.get('*', function(request, response) {
 mongoose.connect("mongodb://chat:chat@ds163360.mlab.com:63360/chat-app")
 const db = mongoose.connection;
 db.once('open', () => {
-  db.collections.rooms.drop();
-  console.log('creating defaults data');
-  // test data to work with
-  Room({
-    room: 'General',
-    messages: [
-      { user: 'ChatBot', message: 'Welcome to react chat :)' }
-    ],
-    users:[{user:'ChatBot', _id:'2311'}],
-    _id:'1'
-  }).save()
-  Room({
-    room: 'Test Room',
-    messages: [
-      { user: 'Test User', message: 'Welcome to test room' }
-    ],
-    users:[{user:'test user', _id:'109301'}],
-    _id:'2'
-  }).save()
+  // db.collections.rooms.drop();
+  // console.log('creating defaults data');
+  // // test data to work with
+  // Room({
+  //   room: 'General',
+  //   messages: [
+  //     { user: 'ChatBot', message: 'Welcome to react chat :)' }
+  //   ],
+  //   users:[{user:'ChatBot', _id:'2311'}],
+  //   _id:'1'
+  // }).save()
+  // Room({
+  //   room: 'Test Room',
+  //   messages: [
+  //     { user: 'Test User', message: 'Welcome to test room' }
+  //   ],
+  //   users:[{user:'test user', _id:'109301'}],
+  //   _id:'2'
+  // }).save()
   server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
   });
