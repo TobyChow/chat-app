@@ -7,13 +7,19 @@ See live example at https://tklchow-chat-app.herokuapp.com/
 - React + Redux
 - Node + Express
 - MongoDb + Mongoose
+- buildpack using create-react-app with Node backend: https://github.com/mars/heroku-cra-node
 
 ## Usage
 2 Different package.json exists, one for UI, and one for server
+
 In root
+
 -`npm i` `npm start` to install server dependecies and start server
+
 cd react-ui
+
 -`npm i` `npm start` to install UI dependecies and start UI
+
 Open at `localhost:3000`
 
 ### Long Loading Time On Initial Startup
